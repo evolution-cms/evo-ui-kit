@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <title>Evolution CMS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"/>
+    <meta name="theme-color" content="#1d2023"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" type="text/css" href="media/style/default/css/styles.min.css?v=1522594219"/>
+    <script type="text/javascript" src="media/script/tabpane.js"></script>
+    <script type="text/javascript" src="media/script/jquery/jquery.min.js"></script>
+        
+    <!-- OnManagerMainFrameHeaderHTMLBlock -->
+    
+
+    <script type="text/javascript">
+      if (!evo) {
+        var evo = {};
+      }
+      var actions;
+      var dontShowWorker = false;
+      var documentDirty = false;
+      var timerForUnload;
+      var managerPath = '';
+
+      evo.lang = {
+        saving: 'Saving, please wait...',
+        error_internet_connection: 'Server isn\'t available. Check your internet connection!',
+        warning_not_saved: 'The changes you have made have not been saved yet. You can choose to stay on the current page in order to save the changes (\'Cancel\'), or you can leave this page, losing any changes you have made (\'OK\').'
+      };
+      evo.style = {
+        actions_file: 'fa fa-file-o',
+        actions_pencil: 'fa fa-pencil',
+        actions_reply: 'fa fa-reply',
+        actions_plus: 'fa fa-plus'
+      };
+      evo.urlCheckConnectionToServer = 'http://site2.div.net.ua/manager/includes/version.inc.php';
+    </script>
+    <script src="media/script/main.js"></script>
+    <script>
+            </script>
+</head>
+<body  class=" dark" data-evocp="color">
+
+
+<div class="container container-body">
+
+	<!-- logout reminder -->
+	<div id="logout_reminder" style="display:none">
+		<div class="widget-wrapper alert alert-warning">
+			Reminder: It seems on Date you forgot to logout. Please pay attention in future to do so after your work is finished.
+		</div>
+	</div>
+
+	<!-- logout reminder -->
+	<div id="multiple_sessions" style="display:none">
+		<div class="widget-wrapper alert alert-warning">
+			Information: Multiple active user sessions (total total) found for user <b>Username</b>.
+		</div>
+	</div>
+
+	<!-- alert -->
+	<div style="display:block">
+		<div class="widget-wrapper alert alert-warning">
+			<h3>One or more configuration details didn't check out OK:</h3>
+            <fieldset>
+            <p><strong>Configuration warning: </strong> 'Important System Files have been modified.'</p>
+            <p style="padding-left:1em"><em>What does this mean?</em><br />
+            You have configured EVO to check important system files for possible website script attacks. This warning does not necessarily mean your site has been compromised, however, you should review the watched files in your installation (set in System configuration -> User -> Check core files on login). If you find your files unaltered or changes were made by site administrators, go to System Configuration and click to re-save settings to dismiss this message. Changes in the following files have been found: </p>
+            <div style="padding-left:1em"><ul><li>manager/index.php</li></ul><ul class="actionButtons" style="float:right"><li><a href="index.php?a=2&b=resetSysfilesChecksum" onclick="return confirm('Are you sure you want to reset the system files checksums?')">Rebuild Checksums</a></li></ul></div>
+            </fieldset>
+
+		</div>
+	</div>
+
+	<!-- end  title -->
+	<div class="row form-row widgets">
+		
+		<div class="col-sm-6" id="welcome">
+			<div class="card">
+				<div class="card-header"> <i class="fa fa-home"></i> Welcome to your EVO Content Manager </div>
+				<div class="card-block"> 
+				<div class="wm_buttons card-body"> 
+					<!--@IF:1 OR 1--> 
+					<span class="wm_button">
+						<a target="main" href="index.php?a=75">
+							<i class="fa fa-user fa-fw fa-2x" title="Manager Users"></i>
+							<span>Manager Users</span>
+						</a>
+					</span> 
+					<!--@ENDIF--> 
+					<!--@IF:1 OR 1--> 
+					<span class="wm_button">
+						<a target="main" href="index.php?a=99">
+							<i class="fa fa-users fa-fw fa-2x" title="Web Users"></i>
+							<span>Web Users</span>
+						</a>
+					</span> 
+					<!--@ENDIF--> 
+					<!--@IF:1 OR 1--> 
+					<span class="wm_button">
+						<a target="main" href="index.php?a=106">
+							<i class="fa fa-cubes fa-fw fa-2x" title="Manage Modules"></i>
+							<span>Modules</span>
+						</a>
+					</span> 
+					<!--@ENDIF--> 
+					<!--@IF:1 --> 
+					<span class="wm_button">
+						<a target="main" href="index.php?a=76">
+							<i class="fa fa-th fa-fw fa-2x" title="Manage Elements"></i>
+							<span>Elements</span>
+						</a>
+					</span> 
+					<!--@ENDIF--> 
+					<!--@IF:1--> 
+					<span class="wm_button">
+						<a target="main" href="index.php?a=93">
+							<i class="fa fa-database fa-fw fa-2x" title="Backup"></i>
+							<span>Backup</span>
+						</a>
+					</span> 
+					<!--@ENDIF--> 
+					<!--@IF:1 OR 1--> 
+					<span class="wm_button">
+						<a target="main" href="index.php?a=9">
+							<i class="fa fa-question-circle fa-fw fa-2x" title="Help"></i>
+							<span>Help</span>
+						</a>
+					</span> 
+					<!--@ENDIF--> 
+				</div>
+				<div class="userprofiletable card-body">
+					<table>
+						<tr>
+							<td width="150">You are logged in as:</td>
+							<td><b>admin</b></td>
+						</tr>
+						<tr>
+							<td>Your role is:</td>
+							<td><b>Administrator</b></td>
+						</tr>
+						<tr>
+							<td>Your last login:</td>
+							<td><b>31-03-2018</b></td>
+						</tr>
+						<tr>
+							<td>Total number of logins:</td>
+							<td><b>16</b></td>
+						</tr>
+						<!--@IF:1-->
+						<tr>
+							<td>Inbox</td>
+							<td><a href="index.php?a=10" target="main"><b>No messages in Inbox.</b></a></td>
+						</tr>
+						<!--@ENDIF-->
+					</table>
+				</div>
+		 </div>
+			</div>
+		</div>
+
+		<div class="col-sm-6" id="onlineinfo">
+			<div class="card">
+				<div class="card-header"> <i class="fa fa-user"></i> Online users </div>
+				<div class="card-block"> <div class="userstable">
+	<div class="card-body">
+		This list shows all users active within the last 20 minutes (current time is  
+		<b>18:04:15</b>):
+	</div>
+	<div class="table-responsive">
+	<table class="table data">
+	<thead>
+		<tr>
+			<th>User</th>
+			<th>ID</th>
+			<th>User's IP address</th>
+			<th>Last hit</th>
+			<th>Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td><strong>admin</strong></td><td>1</td><td>109.251.247.211</td><td>18:01:54</td><td>Viewing home page/ online users</td></tr>
+	</tbody>
+	</table>
+</div>
+</div> </div>
+			</div>
+		</div>
+
+		<div class="col-sm-12" id="modxrecent_widget">
+			<div class="card">
+				<div class="card-header"> <i class="fa fa-pencil-square-o"></i> Recently edited/created Resources </div>
+				<div class="card-block"> <div class="widget-stage">
+			<div class="table-responsive">
+				<table class="table data">
+					<thead>
+						<tr>
+							<th style="width: 1%">ID</th>
+							<th>Title</th>
+							<th style="width: 1%">Edited</th>
+							<th style="width: 1%">User</th>
+							<th style="width: 1%; text-align: center">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse5" class="text-right"><span class="label label-info">5</span></td>
+							<td data-toggle="collapse" data-target=".collapse5"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=5" target="main">Request an Account</a></td>
+							<td data-toggle="collapse" data-target=".collapse5" class="text-right text-nowrap">10-01-2018</td>
+							<td data-toggle="collapse" data-target=".collapse5">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=5" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=5"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=5" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=5" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse5"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse5">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: Sign Up for Full Site Privileges</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: request-an-account</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse9" class="text-right"><span class="label label-info">9</span></td>
+							<td data-toggle="collapse" data-target=".collapse9"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=9" target="main">Mini-Blog HOWTO</a></td>
+							<td data-toggle="collapse" data-target=".collapse9" class="text-right text-nowrap">04-11-2017</td>
+							<td data-toggle="collapse" data-target=".collapse9">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=9" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=9"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=9" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=9" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse9"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse9">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: How to Start Posting with EVO Mini-Blogs</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: article-1126081344</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse18" class="text-right"><span class="label label-info">18</span></td>
+							<td data-toggle="collapse" data-target=".collapse18"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=18" target="main">Just a pretend, older post</a></td>
+							<td data-toggle="collapse" data-target=".collapse18" class="text-right text-nowrap">04-11-2017</td>
+							<td data-toggle="collapse" data-target=".collapse18">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=18" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=18"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=18" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=18" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse18"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse18">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: This post should in fact be archived</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: article-1128398162</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse47" class="text-right"><span class="label label-info">47</span></td>
+							<td data-toggle="collapse" data-target=".collapse47"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=47" target="main">New documentation site: docs.evo.im</a></td>
+							<td data-toggle="collapse" data-target=".collapse47" class="text-right text-nowrap">04-11-2017</td>
+							<td data-toggle="collapse" data-target=".collapse47">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=47" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=47"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=47" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=47" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse47"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse47">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: Multilingual documentation for Evolution CMS </li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: You can get documentation here: http://docs.evo.im</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: new-documentation-site-docs.evo.im</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse49" class="text-right"><span class="label label-info">49</span></td>
+							<td data-toggle="collapse" data-target=".collapse49"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=49" target="main">Edit profile</a></td>
+							<td data-toggle="collapse" data-target=".collapse49" class="text-right text-nowrap">04-11-2017</td>
+							<td data-toggle="collapse" data-target=".collapse49">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=49" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=49"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=49" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=49" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse49"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse49">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: User profile</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: editprofile</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse4" class="text-right"><span class="label label-info">4</span></td>
+							<td data-toggle="collapse" data-target=".collapse4"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=4" target="main">Profile</a></td>
+							<td data-toggle="collapse" data-target=".collapse4" class="text-right text-nowrap">04-11-2017</td>
+							<td data-toggle="collapse" data-target=".collapse4">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=4" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=4"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=4" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=4" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse4"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse4">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: User profile</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: profile</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: Yes</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse37" class="text-right"><span class="label label-info">37</span></td>
+							<td data-toggle="collapse" data-target=".collapse37"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=37" target="main">Forgot Password</a></td>
+							<td data-toggle="collapse" data-target=".collapse37" class="text-right text-nowrap">04-11-2017</td>
+							<td data-toggle="collapse" data-target=".collapse37">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=37" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=37"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=37" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=37" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse37"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse37">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: (<i>Not set</i>)</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: forgot-password</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse6" class="text-right"><span class="label label-info">6</span></td>
+							<td data-toggle="collapse" data-target=".collapse6"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=6" target="main">Contact Us</a></td>
+							<td data-toggle="collapse" data-target=".collapse6" class="text-right text-nowrap">12-10-2017</td>
+							<td data-toggle="collapse" data-target=".collapse6">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=6" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=6"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=6" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=6" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse6"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse6">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: Contact My Evolution Site</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: contact-us</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: Yes</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse33" class="text-right"><span class="label label-info">33</span></td>
+							<td data-toggle="collapse" data-target=".collapse33"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=33" target="main">Getting Help</a></td>
+							<td data-toggle="collapse" data-target=".collapse33" class="text-right text-nowrap">11-10-2017</td>
+							<td data-toggle="collapse" data-target=".collapse33">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=33" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=33"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=33" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=33" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse33"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse33">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: Getting Help with EVO</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: getting-help</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: Yes</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td data-toggle="collapse" data-target=".collapse7" class="text-right"><span class="label label-info">7</span></td>
+							<td data-toggle="collapse" data-target=".collapse7"><a class="published" title="Edit Resource" href="index.php?a=3&amp;id=7" target="main">404 - Document Not Found</a></td>
+							<td data-toggle="collapse" data-target=".collapse7" class="text-right text-nowrap">11-10-2017</td>
+							<td data-toggle="collapse" data-target=".collapse7">admin</td>
+							<td style="text-align: right;" class="actions"><a title="Edit Resource" href="index.php?a=27&amp;id=7" target="main"><i class="fa fa-edit fa-fw"></i></a> <a " title="Preview Resource" target="_blank" href="../index.php?&amp;id=7"><i class="fa fa-eye fa-fw"></i></a> <a onclick="return confirm('Are you sure you want to delete the selected record(s)?')" title="Delete Resource" href="index.php?a=6&amp;id=7" target="main"><i class="fa fa-trash fa-fw"></i></a> <a title="Un-publish Resource" href="index.php?a=62&amp;id=7" target="main"><i class="fa fa-arrow-down fa-fw"></i></a> <a title="Resource overview" data-toggle="collapse" data-target=".collapse7"><i class="fa fa-info fa-fw"></i></a></td>
+						</tr>
+						<tr class="resource-overview-accordian collapse collapse7">
+							<td colspan="6">
+								<div class="overview-body text-small">
+									<ul>
+										<li><b>Long title</b>: Uh oh ... it's a 404! (Page Not Found)</li>
+										<li><b>Description</b>: (<i>Not set</i>)</li>
+										<li><b>Summary (introtext)</b>: (<i>Not set</i>)</li>
+										<li><b>Type</b>: Resource</li>
+										<li><b>URL alias</b>: doc-not-found</li>
+										<li><b>Cacheable</b>: Yes</li>
+										<li><b>Show in menu</b>: No</li>
+										<li><b>Uses Template</b>: EVO startup - Bootstrap</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+</div> </div>
+			</div>
+		</div>
+
+		<div class="col-sm-6" id="news">
+			<div class="card">
+				<div class="card-header"> <i class="fa fa-rss"></i> EVO News </div>
+				<div class="card-block"> <div style="max-height:200px;overflow-y: scroll;padding: 1rem .5rem"><ul><li><a href="https://github.com/evolution-cms/evolution/releases/tag/1.4.2" target="_blank">1.4.2</a> - <b>23-03-2018 16:18:53</b><br />Now you can install from comand line with composer:
+composer create-project evolutioncms/evolution
+https://youtu.be/nWTGSIxyz7s
+
+php cli-install.php --database_server=localhost --database=db --databas...<br />Read <a href="https://github.com/evolution-cms/evolution/releases/tag/1.4.2" target="_blank">more</a>.</li><li><a href="https://github.com/evolution-cms/evolution/releases/tag/1.4.1" target="_blank">1.4.1</a> - <b>02-03-2018 11:01:51</b><br />
+[F] DocLister Extra install gives warning #463 (Pathologic)
+[F] install error on PHP 7.2 (Vitaliy Rudnyh)
+[F] #481 Fix export of Static-HTML with FURLs enabled (Deesen)
+[F] global tabs dont work on 1...<br />Read <a href="https://github.com/evolution-cms/evolution/releases/tag/1.4.1" target="_blank">more</a>.</li><li><a href="https://github.com/evolution-cms/evolution/releases/tag/1.4.0" target="_blank">1.4.0</a> - <b>27-01-2018 13:52:18</b><br />Evolution CMS 1.4.0
+For half a year, a lot of work has been done (more than 600 commits), so this is the second major release of Evolution CMS. The first one can be read here (https://github.com/evolu...<br />Read <a href="https://github.com/evolution-cms/evolution/releases/tag/1.4.0" target="_blank">more</a>.</li></ul></div> </div>
+			</div>
+		</div>
+
+		<div class="col-sm-6" id="security">
+			<div class="card">
+				<div class="card-header"> <i class="fa fa-exclamation-triangle"></i> Security Notices </div>
+				<div class="card-block"> <div style="max-height:200px;overflow-y: scroll;padding: 1rem .5rem"><ul><li><a href="https://github.com/extras-evolution/security-fix/releases/tag/1.3.6" target="_blank">Security problems with 1.3.0-1.3.5</a> - <b>06-11-2017 15:47:04</b><br />You must update the system to version 1.3.6. And also if you updated the version with 1.2 or lower then you need to delete all folders from the manager/media/style except folders: common and default.</li><li><a href="https://github.com/extras-evolution/security-fix/releases/tag/v1.2.2" target="_blank">Security Fix for version 1.2.2</a> - <b>06-11-2017 15:43:19</b><br />I strongly recommend that you update the system version or put a security fix. This makes it possible to avoid getting to the site of viruses</li><li><a href="https://github.com/extras-evolution/security-fix/releases/tag/v1.0.12" target="_blank">Security Fix for version: 1.0.12  - 1.2RC1</a> - <b>06-11-2017 15:43:05</b><br />I strongly recommend that you update the system version or put a security fix. This makes it possible to avoid getting to the site of viruses</li></ul></div> </div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--a class="btn btn-secondary mb-1"><i class="fa fa-cogs"></i> Добавить виджет</a-->
+</div>
+
+
+
+        <script type="text/javascript">
+        function hideConfigCheckWarning(key) {
+        	var xhr = new XMLHttpRequest();
+        	xhr.open("POST", "index.php?a=118", true);
+        	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
+        	xhr.onload = function() {
+        		if(this.readyState === 4) {
+        			var fieldset = document.getElementById(key + "_warning_wrapper").parentNode.parentNode;
+        			fieldset.className = "collapse";
+        		}
+        	};
+        	xhr.send("action=setsetting&key=_hide_configcheck_" + key + "&value=1");
+        }
+		(function($) {
+			$("[data-toggle='collapse']").click(function(e) {
+				if(e.target.tagName === "A") return;
+				if($(this).data("target")) {
+					$($(this).data("target")).toggleClass("in")
+				}
+			});
+		})(jQuery);        
+        </script>
+<script type='text/javascript'>
+	document.body.addEventListener('keydown', function(e) {
+		if((e.which === 115 || e.which === 83 ) && (e.ctrlKey || e.metaKey) && !e.altKey) {
+			var Button1 = document.querySelector('a#Button1') || document.querySelector('#Button1 > a');
+			if(Button1) Button1.click();
+			e.preventDefault()
+		}
+	});
+</script>
+</body>
+</html>
+<!-- end footer -->

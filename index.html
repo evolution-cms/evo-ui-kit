@@ -1,0 +1,426 @@
+  <!DOCTYPE html>
+  <html lang="en" xml:lang="en">
+  <head>
+    <title>My Evolution Site- (EVO CMS Manager)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+    <meta name="theme-color" content="#1d2023" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="media/style/default/css/styles.min.css?v=1522594219" />
+    <link rel="icon" type="image/ico" href="media/style/default/images/favicon.ico" />
+    <style>
+    #tree { width: 21.5625rem }
+    #main, #resizer { left: 21.5625rem }
+    .ios #main { -webkit-overflow-scrolling: touch; overflow-y: scroll; }
+  </style>
+  <script type="text/javascript">
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      document.documentElement.className += ' ios';
+    }
+  </script>
+  <script src="media/script/jquery/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+        // GLOBAL variable modx
+        var modx = {
+          MGR_DIR: 'manager',
+          MODX_SITE_URL: '',
+          MODX_MANAGER_URL: '',
+          user: {
+            role: 1,
+            username: 'admin'
+          },
+          config: {
+            mail_check_timeperiod: 600,
+            menu_height: 2,
+            tree_width: 20,
+            tree_min_width: 0,
+            session_timeout: 15,
+            site_start: 1,
+            tree_page_click: 27,
+            theme: 'default',
+            which_browser: '',
+            layout: 4,
+            textdir: '',
+            global_tabs: 0
+          },
+          lang: {
+            already_deleted: "has already been deleted.",
+            cm_unknown_error: "Something went wrong.",
+            collapse_tree: "Collapse Site Tree",
+            confirm_delete_resource: "Are you sure you want to delete this Resource?\nAny children Resources will also be deleted.",
+            confirm_empty_trash: "This will permanently remove ALL deleted Resources?\n\nProceed?",
+            confirm_publish: "\n\nPublishing this Resource now will remove any (un)publishing dates that may have been set. If you wish to set or keep publish or unpublish dates, please choose to 'edit' the Resource instead.\n\nProceed?",
+            confirm_remove_locks: "Users sometimes close their browser while editing Resources, Templates, Snippets or parsers, possibly leaving the item they were editing in locked state. By pressing OK you can remove ALL locks currently in place.\n\nProceed?",
+            confirm_resource_duplicate: "Are you sure you want to duplicate this Resource? Any item(s) it contains will also be duplicated.",
+            confirm_undelete: "\n\nAny children Resources deleted at the same time as this Resource will also be undeleted, but children Resources deleted at an earlier time will still be deleted.",
+            confirm_unpublish: "\n\nUn-publishing this Resource now will remove any (un)publishing dates that may have been set. If you wish to set or keep publish or unpublish dates, please choose to 'edit' the Resource instead.\n\nProceed?",
+            empty_recycle_bin: "Purge deleted Resources",
+            empty_recycle_bin_empty: "There are no deleted Resources to purge.",
+            error_no_privileges: "You don't have enough privileges for this action!",
+            expand_tree: "Expand Site Tree",
+            inbox: "Inbox",
+            loading_doc_tree: "Loading Site Tree...",
+            loading_menu: "Loading menu...",
+            not_deleted: "has not been deleted.",
+            unable_set_link: "Unable to set the link!",
+            unable_set_parent: "Unable to set new parent!",
+            working: "Working...",
+            paging_prev: "prev"
+          },
+          style: {
+            actions_file: 'fa fa-file-o',
+            actions_pencil: 'fa fa-pencil',
+            actions_plus: 'fa fa-plus',
+            actions_reply: 'fa fa-reply',
+            collapse_tree: '<i class=\"fa fa-arrow-circle-up\"></i>',
+            email: '<i class=\"fa fa-envelope\"></i>',
+            empty_recycle_bin: '<i class=\"fa fa-trash\"></i>',
+            empty_recycle_bin_empty: '<i class=\"fa fa-trash-o\"></i>',
+            expand_tree: '<i class=\"fa fa-arrow-circle-down\"></i>',
+            icons_external_link: '<i class=\"fa fa-external-link\"></i>',
+            icons_working: '<i class=\"fa fa-warning\"></i>',
+            tree_info: '<i class=\"fa fa-info-circle\"></i>',
+            tree_folder: '<i class=\'fa fa-folder\'></i>',
+            tree_folder_secure: '<i class=\'fa fa-folder\'><i class=\'fa fa-lock\'></i></i>',
+            tree_folderopen: '<i class=\'fa fa-folder-open\'></i>',
+            tree_folderopen_secure: '<i class=\'fa fa-folder-open\'><i class=\'fa fa-lock\'></i></i>',
+            tree_minusnode: '<i class=\'fa fa-angle-down\'></i>',
+            tree_plusnode: '<i class=\'fa fa-angle-right\'></i>',
+            tree_preview_resource: '<i class=\'fa fa-eye\'></i>'
+          },
+          permission: {
+            assets_images: 1,
+            delete_document: 1,
+            edit_chunk: 1,
+            edit_plugin: 1,
+            edit_snippet: 1,
+            edit_template: 1,
+            messages: 1,
+            new_document: 1,
+            publish_document: 1,
+            dragndropdocintree: 1
+          },
+          plugins: {
+            ElementsInTree: 0,
+            EVOmodal: 0
+          },
+          extend: function() {
+            for (var i = 1; i < arguments.length; i++) {
+              for (var key in arguments[i]) {
+                if (arguments[i].hasOwnProperty(key)) {
+                  arguments[0][key] = arguments[i][key];
+                }
+              }
+            }
+            return arguments[0];
+          },
+          extended: function(a) {
+            for (var b in a) {
+              this[b] = a[b];
+            }
+            delete a[b];
+          },
+          openedArray: [],
+          lockedElementsTranslation: {"msg":"Are you sure you want to unlock this [+element_type+] (ID [+id+])?","type1":"Template","type2":"Template-Variable","type3":"Chunk","type4":"Snippet","type5":"Plugin","type6":"Module","type7":"Resource","type8":"Role"}
+        };
+        
+      </script>
+      <script src="media/style/default/js/modx.min.js?v=1522594219"></script>
+    </head>
+    <body class=" dark">
+      <input type="hidden" name="sessToken" id="sessTokenInput" value="4af595c48d69902f54e4492d14fb59e8" />
+      <div id="frameset">
+        <div id="mainMenu" class="dropdown">
+          <div class="container">
+            <div class="row">
+              <div class="cell" data-evocp="bgmColor">
+                <ul id="nav" class="nav">
+                 <li id="bars" class=""><a href="javascript:;" alt="Dashboard" target="" onclick="modx.resizer.toggle(); return false;" ><i class="fa fa-bars"></i></a></li>
+                 <li id="site" class="active"><a href="index.php?a=2" alt="Dashboard" target="main" onclick="" ><i class="fa fa-tachometer"></i>Dashboard</a></li>
+                 <li id="elements" class="dropdown "><a href="javascript:;" alt="Elements" target="" onclick=" return false;" class="dropdown-toggle" ><i class="fa fa-th"></i>Elements</a><ul id="" class="dropdown-menu">
+                   <li id="element_templates" class="dropdown-toggle"><a href="index.php?a=76&tab=0" alt="Templates" target="main" onclick="" ><i class="fa fa-newspaper-o"></i>Templates<i class="fa fa-angle-right toggle"></i></a></li>
+                   <li id="element_tplvars" class="dropdown-toggle"><a href="index.php?a=76&tab=1" alt="Template Variables" target="main" onclick="" ><i class="fa fa-list-alt"></i>Template Variables<i class="fa fa-angle-right toggle"></i></a></li>
+                   <li id="element_htmlsnippets" class="dropdown-toggle"><a href="index.php?a=76&tab=2" alt="Chunks" target="main" onclick="" ><i class="fa fa-th-large"></i>Chunks<i class="fa fa-angle-right toggle"></i></a></li>
+                   <li id="element_snippets" class="dropdown-toggle"><a href="index.php?a=76&tab=3" alt="Snippets" target="main" onclick="" ><i class="fa fa-code"></i>Snippets<i class="fa fa-angle-right toggle"></i></a></li>
+                   <li id="element_plugins" class="dropdown-toggle"><a href="index.php?a=76&tab=4" alt="Plugins" target="main" onclick="" ><i class="fa fa-plug"></i>Plugins<i class="fa fa-angle-right toggle"></i></a></li>
+                   <li id="manage_categories" class=""><a href="index.php?a=120" alt="Manage Categories" target="main" onclick="" ><i class="fa fa-object-group"></i>Manage Categories</a></li>
+                   <li id="manage_files" class=""><a href="index.php?a=31" alt="Manage Files" target="main" onclick="" ><i class="fa fa-folder-open-o"></i>Manage Files</a></li></ul></li>
+                   <li id="modules" class="dropdown "><a href="javascript:;" alt="Modules" target="" onclick=" return false;" class="dropdown-toggle" ><i class="fa fa-cubes"></i>Modules</a><ul id="" class="dropdown-menu">
+                     <li id="new_module" class=""><a href="index.php?a=106" alt="Manage Modules" target="main" onclick="" ><i class="fa fa-cubes"></i>Manage Modules</a></li>
+                     <li id="module1" class=""><a href="index.php?a=112&id=1" alt="Extras" target="main" onclick="" ><i class="fa fa-cube"></i>Extras</a></li>
+                     <li id="module2" class=""><a href="index.php?a=112&id=2" alt="Doc Manager" target="main" onclick="" ><i class="fa fa-cube"></i>Doc Manager</a></li></ul></li>
+                     <li id="users" class="dropdown "><a href="javascript:;" alt="Users" target="" onclick=" return false;" class="dropdown-toggle" ><i class="fa fa-users"></i>Users</a><ul id="" class="dropdown-menu">
+                       <li id="user_management_title" class="dropdown-toggle"><a href="index.php?a=75" alt="Manager Users" target="main" onclick="" ><i class="fa fa fa-user"></i>Manager Users<i class="fa fa-angle-right toggle"></i></a></li>
+                       <li id="web_user_management_title" class="dropdown-toggle"><a href="index.php?a=99" alt="Web Users" target="main" onclick="" ><i class="fa fa-users"></i>Web Users<i class="fa fa-angle-right toggle"></i></a></li>
+                       <li id="role_management_title" class=""><a href="index.php?a=86" alt="Roles" target="main" onclick="" ><i class="fa fa-legal"></i>Roles</a></li>
+                       <li id="manager_permissions" class=""><a href="index.php?a=40" alt="Manager Permissions" target="main" onclick="" ><i class="fa fa-male"></i>Manager Permissions</a></li>
+                       <li id="web_permissions" class=""><a href="index.php?a=91" alt="Web Permissions" target="main" onclick="" ><i class="fa fa-universal-access"></i>Web Permissions</a></li></ul></li>
+                       <li id="tools" class="dropdown "><a href="javascript:;" alt="Tools" target="" onclick=" return false;" class="dropdown-toggle" ><i class="fa fa-wrench"></i>Tools</a><ul id="" class="dropdown-menu">
+                         <li id="refresh_site" class="item-group"><a href="index.php?a=26" alt="Clear Cache" target="main" onclick="" ><i class="fa fa-recycle"></i>Clear Cache</a><a href="javascript:;" class="btn btn-secondary" onclick="modx.popup({url:'index.php?a=26', title:'Clear Cache', icon: 'fa-recycle', iframe: 'ajax', selector: '.tab-page>.container', position: 'right top', width: 'auto', maxheight: '50%', wrap: 'body' })" title="Clear Cache"><i class="fa fa-recycle"></i></a></li>
+                         <li id="search" class=""><a href="index.php?a=71" alt="Search" target="main" onclick="" ><i class="fa fa-search"></i>Search</a></li>
+                         <li id="bk_manager" class=""><a href="index.php?a=93" alt="Backup" target="main" onclick="" ><i class="fa fa-database"></i>Backup</a></li>
+                         <li id="remove_locks" class=""><a href="javascript:modx.removeLocks();" alt="Remove Locks" target="" onclick="" ><i class="fa fa-hourglass"></i>Remove Locks</a></li>
+                         <li id="import_site" class=""><a href="index.php?a=95" alt="Import HTML" target="main" onclick="" ><i class="fa fa-upload"></i>Import HTML</a></li>
+                         <li id="export_site" class=""><a href="index.php?a=83" alt="Export Static HTML" target="main" onclick="" ><i class="fa fa-download"></i>Export Static HTML</a></li></ul></li></ul>                </div>
+                         <div class="cell" data-evocp="bgmColor">
+                          <ul id="settings" class="nav">
+                            <li id="searchform">
+                              <form action="index.php?a=71" method="post" target="main">
+                                <input type="hidden" value="Search" name="submitok" />
+                                <label for="searchid" class="label_searchid">
+                                  <i class="fa fa-search"></i>                                </label>
+                                  <input type="text" id="searchid" name="searchid" size="25" />
+                                  <div class="mask"></div>
+                                </form>
+                              </li>
+                              <li id="preview">
+                                <a href="../" target="_blank" title="Preview">
+                                  <i class="fa fa-desktop"></i>                            </a>
+                                </li>
+                                <li id="account" class="dropdown account">
+                                  <a href="javascript:;" class="dropdown-toggle" onclick="return false;">
+                                    <span class="username">admin</span>
+                                    <span class="icon"><i class="fa fa-user-circle"></i></span>
+                                    <i id="msgCounter"></i>
+                                  </a>
+                                  <ul class="dropdown-menu">
+                                    <li id="newMail"></li>
+                                    <li>
+                                      <a onclick="" href="index.php?a=28" target="main">
+                                        <i class="fa fa-lock"></i>Change Password                                        </a>
+                                      </li>
+                                      <li>
+                                        <a href="index.php?a=8">
+                                          <i class="fa fa-sign-out"></i>Logout                                    </a>
+                                        </li>
+                                        <li><span class="dropdown-item" title="My Evolution Site &ndash; Evolution 1.4.2 (Mar 23, 2018)" >Evolution 1.4.2</span></li>                            </ul>
+                                      </li>
+                                      <li id="system" class="dropdown">
+                                        <a href="javascript:;" class="dropdown-toggle" title="System" onclick="return false;"><i class="fa fa-cogs"></i></a>
+                                        <ul class="dropdown-menu">
+                                          <li>
+                                            <a href="index.php?a=17" target="main">
+                                              <i class="fa fa-sliders fw"></i>Configuration                                            </a>
+                                            </li>
+                                            <li>
+                                              <a href="index.php?a=70" target="main">
+                                                <i class="fa fa-calendar"></i>Schedule                                            </a>
+                                              </li>
+                                              <li>
+                                                <a href="index.php?a=114" target="main">
+                                                  <i class="fa fa-exclamation-triangle"></i></i>System Events                                            </a>
+                                                </li>
+                                                <li>
+                                                  <a href="index.php?a=13" target="main">
+                                                    <i class="fa fa-user-secret"></i>Manager Actions                                            </a>
+                                                  </li>
+                                                  <li>
+                                                    <a href="index.php?a=53" target="main">
+                                                      <i class="fa fa-info-circle"></i>System Info                                            </a>
+                                                    </li>
+                                                    <li>
+                                                      <a href="index.php?a=9" target="main">
+                                                        <i class="fa fa-question-circle"></i>Help                                            </a>
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div id="tree">
+
+                                          <div class="treeframebody">
+                                           <div id="treeMenu">
+
+                                            <a class="treeButton" id="treeMenu_expandtree" onclick="modx.tree.expandTree();" title="Expand Site Tree"><i class="fa fa-arrow-circle-down"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_collapsetree" onclick="modx.tree.collapseTree();" title="Collapse Site Tree"><i class="fa fa-arrow-circle-up"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_addresource" onclick="modx.tabs({url:'http://site2.div.net.ua/manager/?a=4', title: 'New Resource'});" title="New Resource"><i class="fa fa-file"></i></a>
+                                            <a class="treeButton" id="treeMenu_addweblink" onclick="modx.tabs({url:'http://site2.div.net.ua/manager/?a=72', title: 'New Weblink'});" title="New Weblink"><i class="fa fa-link"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_refreshtree" onclick="modx.tree.restoreTree();" title="Refresh Site Tree"><i class="fa fa-refresh"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_sortingtree" onclick="modx.tree.showSorter(event);" title="Sort the Site Tree"><i class="fa fa-sort"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_sortingindex" onclick="modx.tabs({url: 'http://site2.div.net.ua/manager/?a=56&id=0', title: 'Sort menu index'});" title="Sort menu index"><i class="fa fa-sort-numeric-asc"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_openimages" title="Manage Images
+                                            (Shift-Mouseclick to open multiple windows)"><i class="fa fa-camera"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_openfiles" title="Manage Files
+                                            (Shift-Mouseclick to open multiple windows)"><i class="fa fa-files-o"></i></a>
+
+                                            <a class="treeButton" id="treeMenu_openelements" title="Manage Elements
+                                            (Shift-Mouseclick to open multiple windows)"><i class="fa fa-th"></i></a>
+
+                                            <a class="treeButton treeButtonDisabled" id="treeMenu_emptytrash" title="There are no deleted Resources to purge."><i class="fa fa-trash-o"></i></a>
+
+                                          </div>
+
+                                          <div id="treeHolder">
+                                            <div id="node0" class="rootNode">
+                                              <a class="node" onclick="modx.tree.treeAction(event, 0)" data-id="0" data-title-esc="My Evolution Site">
+                                                <span class="icon"><i class="fa fa-sitemap"></i></span>
+                                                <span class="title">EVO UI KIT</span>
+                                              </a>
+                                              <div id="treeloader" class=""><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>
+                                            </div>
+                                            <div id="treeRoot">
+
+                                              <div id="node1">
+                                                <a class="node" href="dashboard.html" target="main"><span class="indent"></span>
+                                                  <span class="icon"><i class="fa fa-home"></i></span><span class="title">Dashboard</span><small>(2)</small>
+                                                </a>
+                                              </div>
+
+                                              <div id="node2" draggable="true">
+                                                <a class="node">
+                                                  <span class="indent"></span><span class="toggle"><i class="fa fa-angle-down"></i></span><span class="icon"><i class="fa fa-folder-open"></i></span><span class="title" >Document</span><small></small>
+                                                </a>
+
+                                                    <div style="overflow: hidden;">
+
+                                                      <div id="node9" style="margin-top: 0px;">
+                                                        <a class="node hidemenu" href="document-edit.html" target="main"><span class="indent">
+                                                          <i></i></span><span class="icon"><i class="fa fa-file-o"></i></span><span class="title">Document edit</span><small>(27)</small>
+                                                        </a>
+                                                      </div>
+
+                                                      <div id="node18">
+                                                        <a class="node hidemenu"><span class="indent"><i></i></span><span class="icon"><i class="fa fa-file-o"></i></span><span class="title">Document overview</span><small>(3)</small>
+                                                        </a>
+                                                      </div>
+
+                                                    </div>
+                                                  </div>
+
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div id="main">
+                                            <iframe id="mainframe" name="main" src="dashboard.html" scrolling="auto" frameborder="0" onload="modx.main.onload(event);"></iframe>
+                                            <div id="mainloader"></div>
+                                          </div>
+                                          <div id="resizer"></div>
+                                          <div id="searchresult"></div>
+
+                                          <div id="floater" class="dropdown">
+                                            <form name="sortFrm" id="sortFrm">
+                                              <div class="form-group">
+                                                <input type="hidden" name="dt" value="" />
+                                                <label>Sort the Site Tree</label>
+                                                <select name="sortby" class="form-control">
+                                                  <option value="isfolder" >Folder</option>
+                                                  <option value="pagetitle" >Resource's title</option>
+                                                  <option value="longtitle" >Long title</option>
+                                                  <option value="id" >ID</option>
+                                                  <option value="menuindex" selected='selected'>Menu index</option>
+                                                  <option value="createdon" >Creation date</option>
+                                                  <option value="editedon" >Edit date</option>
+                                                  <option value="publishedon" >Publish date</option>
+                                                  <option value="alias" >Alias</option>
+                                                </select>
+                                              </div>
+                                              <div class="form-group">
+                                                <select name="sortdir" class="form-control">
+                                                  <option value="DESC" >Descending</option>
+                                                  <option value="ASC" selected='selected'>Ascending</option>
+                                                </select>
+                                              </div>
+                                              <div class="form-group">
+                                                <label>Display Name in Resource Tree</label>
+                                                <select name="nodename" class="form-control">
+                                                  <option value="default" >Default</option>
+                                                  <option value="pagetitle" >Resource's title</option>
+                                                  <option value="longtitle" >Long title</option>
+                                                  <option value="menutitle" >Menu title</option>
+                                                  <option value="alias" >URL alias</option>
+                                                  <option value="createdon" >Creation date</option>
+                                                  <option value="editedon" >Edit date</option>
+                                                  <option value="publishedon" >Publish date</option>
+                                                </select>
+                                              </div>
+                                              <div class="form-group">
+                                                <label>
+                                                  <input type="checkbox" name="showonlyfolders" value="" onclick="this.value = (this.value ? '' : 1);"  checked="checked" /> View children</label>
+                                                </div>
+                                                <div class="text-center">
+                                                  <a href="javascript:;" class="btn btn-primary" onclick="modx.tree.updateTree();modx.tree.showSorter(event);" title="Sort the Site Tree">Sort the Site Tree</a>
+                                                </div>
+                                              </form>
+                                            </div>
+
+                                            <!-- Contextual Menu Popup Code -->
+                                            <div id="mx_contextmenu" class="dropdown" onselectstart="return false;">
+                                              <div id="nameHolder">&nbsp;</div>
+                                              <div class="menuLink" id="item3" onclick="modx.tree.menuHandler(3);"><i class="fa fa-file-o"></i> Create Resource here</div><div class="menuLink" id="item2" onclick="modx.tree.menuHandler(2);"><i class="fa fa-pencil-square-o"></i> Edit Resource</div><div class="menuLink" id="item5" onclick="modx.tree.menuHandler(5);"><i class="fa fa-arrows"></i> Move Resource</div><div class="menuLink" id="item7" onclick="modx.tree.menuHandler(7);"><i class="fa fa-clone"></i> Duplicate Resource</div><div class="menuLink" id="item11" onclick="modx.tree.menuHandler(11);"><i class="fa fa-sort-numeric-asc"></i> Sort menu index</div>        <div class="seperator"></div>
+                                              <div class="menuLink" id="item9" onclick="modx.tree.menuHandler(9);"><i class="fa fa-arrow-up"></i> Publish Resource</div><div class="menuLink" id="item10" onclick="modx.tree.menuHandler(10);"><i class="fa fa-arrow-down"></i> Un-publish Resource</div><div class="menuLink" id="item4" onclick="modx.tree.menuHandler(4);"><i class="fa fa-trash"></i> Delete Resource</div><div class="menuLink" id="item8" onclick="modx.tree.menuHandler(8);"><i class="fa fa-arrow-circle-o-up"></i> Undelete Resource</div>        <div class="seperator"></div>
+                                              <div class="menuLink" id="item6" onclick="modx.tree.menuHandler(6);"><i class="fa fa-link"></i> Create Weblink here</div>        <div class="seperator"></div>
+                                              <div class="menuLink" id="item1" onclick="modx.tree.menuHandler(1);"><i class="fa fa-info"></i> Resource overview</div><div class="menuLink" id="item12" onclick="modx.tree.menuHandler(12);"><i class="fa fa-eye"></i> Preview Resource</div>
+                                            </div>
+
+
+                                            <script type="text/javascript">
+
+                                              if (document.getElementById('treeMenu')) {
+
+                                                document.getElementById('treeMenu_openelements').onclick = function(e) {
+                                                  e.preventDefault();
+                                                  if (modx.config.global_tabs && !e.shiftKey) {
+                                                    modx.tabs({url: 'http://site2.div.net.ua/manager/index.php?a=76', title: 'Elements'});
+                                                  } else {
+                                                    var randomNum = 'Elements';
+                                                    if (e.shiftKey) {
+                                                      randomNum += ' #' + Math.floor((Math.random() * 999999) + 1);
+                                                    }
+                                                    modx.openWindow({
+                                                      url: 'http://site2.div.net.ua/manager/index.php?a=76',
+                                                      title: randomNum
+                                                    });
+                                                  }
+                                                };
+
+                                                document.getElementById('treeMenu_openimages').onclick = function(e) {
+                                                  e.preventDefault();
+                                                  if (modx.config.global_tabs && !e.shiftKey) {
+                                                    modx.tabs({url: 'http://site2.div.net.ua/manager/media/browser/mcpuk/browse.php?filemanager=media/browser/mcpuk/browse.php&type=images', title: 'Manage Images'});
+                                                  } else {
+                                                    var randomNum = 'Files';
+                                                    if (e.shiftKey) {
+                                                      randomNum += ' #' + Math.floor((Math.random() * 999999) + 1);
+                                                    }
+                                                    modx.openWindow({
+                                                      url: 'http://site2.div.net.ua/manager/media/browser/mcpuk/browse.php?&type=images',
+                                                      title: randomNum
+                                                    });
+                                                  }
+                                                };
+
+                                                document.getElementById('treeMenu_openfiles').onclick = function(e) {
+                                                  e.preventDefault();
+                                                  if (modx.config.global_tabs && !e.shiftKey) {
+                                                    modx.tabs({url: 'http://site2.div.net.ua/manager/media/browser/mcpuk/browse.php?filemanager=media/browser/mcpuk/browse.php&type=files', title: 'Files'});
+                                                  } else {
+                                                    var randomNum = 'Files';
+                                                    if (e.shiftKey) {
+                                                      randomNum += ' #' + Math.floor((Math.random() * 999999) + 1);
+                                                    }
+                                                    modx.openWindow({
+                                                      url: 'http://site2.div.net.ua/manager/media/browser/mcpuk/browse.php?&type=files',
+                                                      title: randomNum
+                                                    });
+                                                  }
+                                                };
+
+                                              }
+
+                                            </script>
+
+                                          </div>
+                                        </body>
+                                        </html>
